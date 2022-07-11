@@ -8,8 +8,8 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
       - grafana-configs:/etc/grafana
-      - ./grafana.ini:/etc/grafana/grafana.ini
-      - ./defaults.ini:/usr/share/grafana/conf/defaults.ini
+#       - ./config/grafana.ini:/etc/grafana/grafana.ini
+#       - ./config/defaults.ini:/usr/share/grafana/conf/defaults.ini
     environment:
       GF_RENDERING_SERVER_URL: http://renderer:8081/render
       GF_RENDERING_CALLBACK_URL: http://grafana:3000/
@@ -50,9 +50,9 @@ services:
     container_name: blackbox
     restart: unless-stopped
     command:
-      - "--config.file=/etc/blackbox_exporter/blackbox.yml"
+      - "--config.file=/config/blackbox.yml"
     volumes:
-      - ./blackbox.yml:/etc/blackbox_exporter/blackbox.yml
+      - "./config:/config"
     ports:
       - "9115:9115"
 
@@ -72,3 +72,4 @@ volumes:
   grafana-configs:
   prom-data:
   prom-configs:
+
