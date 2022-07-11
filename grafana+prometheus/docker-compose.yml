@@ -1,0 +1,74 @@
+version: "3.3"
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-configs:/etc/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+      - ./defaults.ini:/usr/share/grafana/conf/defaults.ini
+    environment:
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+      GF_LOG_FILTERS: rendering:debug
+  renderer:
+    image: grafana/grafana-image-renderer:latest
+    ports:
+      - 8081
+
+  prometheus:
+    image: prom/prometheus:v2.36.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - prom-data:/prometheus
+      - prom-configs:/etc/prometheus
+#    command:
+#      - '--storage.tsdb.retention.size=1GB'
+#      - '--storage.tsdb.retention.time=5d'
+  node-exporter:
+    image: prom/node-exporter:v1.3.1
+    container_name: node-exporter
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude'
+      - '^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'
+ 
+  blackbox:
+    image: prom/blackbox-exporter
+    container_name: blackbox
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/blackbox_exporter/blackbox.yml"
+    volumes:
+      - ./blackbox.yml:/etc/blackbox_exporter/blackbox.yml
+    ports:
+      - "9115:9115"
+
+  coinmarketcap-exporter:
+    image: bcawthra/coinmarketcap-exporter
+    container_name: coinmarketcap
+    ports:
+      - "9101:9101"
+    environment:
+      - COINMARKETCAP_API_KEY=f5d00f69-6f0d-41f7-a93d-ecad898b81e9
+
+    volumes:
+      - ./coinmarketcap-exporter/:/opt/coinmarketcap-exporter
+
+volumes:
+  grafana-data:
+  grafana-configs:
+  prom-data:
+  prom-configs:
