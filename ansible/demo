@@ -1,0 +1,5 @@
+[demo]
+
+web ansible_host=35.228.239.23 ansible_user=nikolos 
+
+
