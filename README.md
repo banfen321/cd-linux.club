@@ -1,7 +1,8 @@
 # cd-linux.club
 Greetings, this repository stores all the data for deploying the https://cd-linux.club/ project.
 
-The project allows you to very quickly restore cd-linux.club and all its services. 
+The project allows you to very quickly restore cd-linux.club and all its services. <br><br>
+
 
 
 1. Deploying a server on GCP using terraform/main.tf
