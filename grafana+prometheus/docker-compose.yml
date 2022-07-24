@@ -62,7 +62,7 @@ services:
     ports:
       - "9101:9101"
     environment:
-      - COINMARKETCAP_API_KEY=f5d00f69-6f0d-41f7-a93d-ecad898b81e9
+      - COINMARKETCAP_API_KEY=************************
 
     volumes:
       - ./coinmarketcap-exporter/:/opt/coinmarketcap-exporter
