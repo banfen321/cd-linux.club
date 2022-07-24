@@ -14,9 +14,9 @@ services:
     environment:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
-      DB_MYSQL_USER: "npm"
-      DB_MYSQL_PASSWORD: "npm"
-      DB_MYSQL_NAME: "npm"
+      DB_MYSQL_USER: "********"
+      DB_MYSQL_PASSWORD: "********"
+      DB_MYSQL_NAME: "********"
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
     volumes:
@@ -30,10 +30,10 @@ services:
     container_name: mariadb
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
+      MYSQL_ROOT_PASSWORD: '********'
+      MYSQL_DATABASE: '********'
+      MYSQL_USER: '********'
+      MYSQL_PASSWORD: '********'
     volumes:
       - ./data/mysql:/var/lib/mysql
 
